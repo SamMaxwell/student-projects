@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS projects;
+
+CREATE DATABASE projects;
