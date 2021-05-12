@@ -11,10 +11,10 @@ const login = (req, res, user) => req
     req.log.info(`User ${user.name} logged in`);
 
     req.session.userId = user.id;
-    req.session.name = user.name;
+    req.session.userName = user.name;
     req.session.isEnabled = user.isEnabled;
     req.session.isAdmin = user.isAdmin;
-    req.session.loggedIn = true;
+    req.session.isLoggedIn = true;
 
     res.json(user);
   });

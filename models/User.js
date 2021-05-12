@@ -11,21 +11,21 @@ class User extends Model {
 }
 
 const validatePassword = (password) => {
-  const rules = {
-    numeric: /\d/,
-    lowercase: /[a-z]/,
-    uppercase: /[A-Z]/,
-    specialCharacter: /[`~!@#$%^&*()-_=+{}[\]|;:'",<.>/? ]/,
-  };
+  const rules = [
+    ['\\d', 'contains at least one numeric digit'],
+    ['[a-z]', 'contains at least one lower case alphabetic character'],
+    ['[A-Z]', 'contains at least one upper case alphabetic character'],
+    ['[`~!@#$%^&*()-_=+{}[\\]|;:\'",<.>/? ]', 'contains at least one special character'],
+  ];
 
-  const totalSatisfied = Object.values(rules)
+  const totalSatisfied = rules
     .reduce(
-      (satisfied, rule) => satisfied + (rule.test(password) ? 1 : 0),
+      (satisfied, [pattern]) => satisfied + ((new RegExp(pattern)).test(password) ? 1 : 0),
       0,
     );
 
   if (password.length < 8 || password.length > 32 || totalSatisfied < 3) {
-    throw new Error('password does not satisfy enough eligibility rules');
+    throw new Error('password does not satisfy eligibility rules');
   }
 };
 
