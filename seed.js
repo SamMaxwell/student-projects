@@ -8,30 +8,30 @@ db
   .then(() => User
     .bulkCreate([{
       name: 'Sam Maxwell',
-      password: 'S1m52lPr4j2cts!',
+      password: 'Password 1!',
     }, {
       name: 'Samuel Maddox',
-      password: 'Casino Royale 2006!',
+      password: 'Password 1!',
       isAdmin: true,
       isEnabled: true,
     }, {
       name: 'Guillermo Barila',
-      password: 'Quantum of Solace 2008!',
+      password: 'Password 1!',
       isAdmin: true,
       isEnabled: true,
     }, {
       name: 'Esar Behlum',
-      password: 'Skyfall 2012!',
+      password: 'Password 1!',
       isAdmin: true,
       isEnabled: true,
     }, {
       name: 'Harsh Patel',
-      password: 'Spectre 2015!',
+      password: 'Password 1!',
       isAdmin: true,
       isEnabled: true,
     }, {
       name: 'Eli Vargas',
-      password: 'No Time to Die 2021!',
+      password: 'Password 1!',
       isAdmin: true,
       isEnabled: true,
     }], {
