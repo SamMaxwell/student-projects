@@ -8,6 +8,10 @@
   <div class="col-md-6">
     <form class="form profile-form" method="post">
       <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <p id="profile-error"></p>
+      </div>
+      <div class="form-group">
         <label for="skills">skills:</label>
         <textarea class="form-input" type="text" id="skills" name="skills">{{skills}}</textarea>
       </div>
@@ -15,13 +19,8 @@
         <label for="project-funding">accomplishments:</label>
         <textarea class="form-input" type="text" id="accomplishments" name="accomplishments">{{accomplishments}}</textarea>
       </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <p id="profile-error"></p>
-      </div>
     </form>
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 <script src="/scripts/profile.js"></script>

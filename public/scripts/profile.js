@@ -1,10 +1,7 @@
 /* eslint-disable no-undef */
-const skillsMDE = new SimpleMDE({
-  element: document.getElementById('skills'),
-});
-
-const accomplishmentsMDE = new SimpleMDE({
-  element: document.getElementById('accomplishments'),
+$(document).ready(() => {
+  $('#skills').summernote();
+  $('#accomplishments').summernote();
 });
 
 const clearErrors = (error) => Object.keys(error)
@@ -25,8 +22,8 @@ const save = async (event) => {
   fetch('/profile', {
     method: 'POST',
     body: JSON.stringify({
-      skills: skillsMDE.value(),
-      accomplishments: accomplishmentsMDE.value(),
+      skills: $('#skills').summernote('code'),
+      accomplishments: $('#accomplishments').summernote('code'),
     }),
     headers: { 'Content-Type': 'application/json' },
   })
