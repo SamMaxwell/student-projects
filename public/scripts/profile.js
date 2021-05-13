@@ -1,47 +1,48 @@
-const newFormHandler = async (event) => {
+/* eslint-disable no-undef */
+const skillsMDE = new SimpleMDE({
+  element: document.getElementById('skills'),
+});
+
+const accomplishmentsMDE = new SimpleMDE({
+  element: document.getElementById('accomplishments'),
+});
+
+const clearErrors = (error) => Object.keys(error)
+  .forEach((key) => {
+    // eslint-disable-next-line no-param-reassign
+    error[key].textContent = '';
+  });
+
+const save = async (event) => {
   event.preventDefault();
 
-  const name = document.querySelector('#project-name').value.trim();
-  const neededFunding = document.querySelector('#project-funding').value.trim();
-  const description = document.querySelector('#project-desc').value.trim();
+  const error = {
+    form: document.querySelector('#profile-error'),
+  };
 
-  if (name && neededFunding && description) {
-    const response = await fetch('/api/projects', {
-      method: 'POST',
-      body: JSON.stringify({ name, needed_funding: neededFunding, description }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+  clearErrors(error);
+
+  fetch('/profile', {
+    method: 'POST',
+    body: JSON.stringify({
+      skills: skillsMDE.value(),
+      accomplishments: accomplishmentsMDE.value(),
+    }),
+    headers: { 'Content-Type': 'application/json' },
+  })
+    .then((response) => {
+      if (response.ok) {
+        document.location.replace('/profile');
+      }
+
+      return response.json();
+    })
+    .then(({ message }) => {
+      error.form.textContent = message;
+    })
+    .catch(() => {
+      error.form.textContent = 'An error occurred while attempting to save your profile';
     });
-
-    if (response.ok) {
-      document.location.replace('/profile');
-    } else {
-      alert('Failed to create project');
-    }
-  }
 };
 
-const delButtonHandler = async (event) => {
-  if (event.target.hasAttribute('data-id')) {
-    const id = event.target.getAttribute('data-id');
-
-    const response = await fetch(`/api/projects/${id}`, {
-      method: 'DELETE',
-    });
-
-    if (response.ok) {
-      document.location.replace('/profile');
-    } else {
-      alert('Failed to delete project');
-    }
-  }
-};
-
-document
-  .querySelector('.new-project-form')
-  .addEventListener('submit', newFormHandler);
-
-document
-  .querySelector('.project-list')
-  .addEventListener('click', delButtonHandler);
+document.querySelector('.profile-form').addEventListener('submit', save);

@@ -3,13 +3,9 @@ module.exports = {
     if (!isLoggedIn) {
       res.redirect('/login');
     } else if (!isEnabled) {
-      res.render('not-enabled', {
-        isLoggedIn,
-      });
+      res.redirect('/profile', { isEnabled });
     } else {
-      res.render('home', {
-        isLoggedIn,
-      });
+      res.render('home', { isLoggedIn });
     }
   },
   login: (req, res) => {
