@@ -17,32 +17,48 @@ const manageUsers = (req, res) => {
 };
 
 const enableUser = (req, res) => {
-  User.findByPk(req.body.userid).then((user) => {
-    res.json(user);
-  })
+  User
+    .update({
+      isEnabled: 1,
+    }, {
+      where: { id: req.body.userid },
+    })
+    .then(() => {
+      res.status(200).end();
+    })
     .catch(({ message } = {}) => {
-      req.log.error(`User.findAll: ${message}`);
-      res.render('error', { message: 'Users not found' });
+      req.log.error(`User.update: ${message}`);
+      res.status(500).json({ message: 'could not update enable' });
     });
 };
 
 const disableUser = (req, res) => {
-  User.findByPk(req.body.userid).then((user) => {
-    res.json(user);
-  })
+  User
+    .update({
+      isEnabled: 0,
+    }, {
+      where: { id: req.body.userid },
+    })
+    .then(() => {
+      res.status(200).end();
+    })
     .catch(({ message } = {}) => {
-      req.log.error(`User.findAll: ${message}`);
-      res.render('error', { message: 'Users not found' });
+      req.log.error(`User.update: ${message}`);
+      res.status(500).json({ message: 'could not update disable' });
     });
 };
 
 const deleteUser = (req, res) => {
-  User.findByPk(req.body.userid).then((user) => {
-    res.json(user);
-  })
+  User
+    .destroy({
+      where: { id: req.body.userid },
+    })
+    .then(() => {
+      res.status(200).end();
+    })
     .catch(({ message } = {}) => {
-      req.log.error(`User.findAll: ${message}`);
-      res.render('error', { message: 'Users not found' });
+      req.log.error(`User.delete: ${message}`);
+      res.status(500).json({ message: 'could not delete user' });
     });
 };
 
