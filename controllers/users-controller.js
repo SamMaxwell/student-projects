@@ -59,7 +59,6 @@ const userGet = (req, res) => {
     });
 };
 
-manageUsers
 const { User } = require('../models');
 
 const manageUsers = (req, res) => {
