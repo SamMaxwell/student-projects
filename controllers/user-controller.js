@@ -1,10 +1,10 @@
 const { User } = require('../models');
 
-const userEnabled = (req, res) => {
+const getNotIsEnabled = (req, res) => {
   User
     .findAll({
       order: 'id ASC',
-      where: { isEnabled: true },
+      where: { isEnabled: false },
     })
     .then((users) => {
       res.render('user', users);
@@ -16,5 +16,5 @@ const userEnabled = (req, res) => {
 };
 
 module.exports = {
-  userEnabled,
+  getNotIsEnabled,
 };
