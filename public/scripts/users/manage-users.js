@@ -1,7 +1,4 @@
 /* eslint-disable no-undef */
-$(document).ready(() => {
-  // alert("test");
-});
 
 const clearErrors = (error) => Object.keys(error)
   .forEach((key) => {
@@ -17,8 +14,6 @@ const enableUser = async (event) => {
   clearErrors(error);
 
   const userid = event.target.dataset.user;
-
-  console.log(userid);
 
   fetch('/manage/enable', {
     method: 'PUT',
@@ -65,7 +60,6 @@ const deleteUser = async (event) => {
   clearErrors(error);
 
   const userid = event.target;
-  console.log(userid);
 
   fetch('/manage/delete', {
     method: 'DELETE',
@@ -81,11 +75,28 @@ const deleteUser = async (event) => {
   });
 };
 
-const enabledBtns = document.querySelector('.enable-btn');
-if (enabledBtns) enabledBtns.addEventListener('click', enableUser);
+const enabledBtns = document.querySelectorAll('.enable-btn');
+const disabledBtns = document.querySelectorAll('.disable-btn');
+const deletedBtns = document.querySelectorAll('.delete-btn');
 
-const disabledBtns = document.querySelector('.disable-btn');
-if (disabledBtns) disabledBtns.addEventListener('click', disableUser);
+if (enabledBtns) {
+  enabledBtns.forEach((elem) => {
+    elem.addEventListener('click', enableUser);
+  });
+}
 
-const deleteBtns = document.querySelector('.delete-btn');
-if (deleteBtns) deleteBtns.addEventListener('click', deleteUser);
+if (disabledBtns) {
+  disabledBtns.forEach((elem) => {
+    elem.addEventListener('click', disableUser);
+  });
+}
+
+if (deletedBtns) {
+  deletedBtns.forEach((elem) => {
+    elem.addEventListener('click', deleteUser);
+  });
+}
+
+$(document).ready(() => {
+  //
+});
