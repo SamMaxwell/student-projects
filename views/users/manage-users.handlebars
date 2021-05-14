@@ -12,7 +12,7 @@
         {{#each users as |user| }}
             <span>
             {{#if isEnabled}}
-             <li class="list-group-item d-flex justify-content-between list-group-item-success">
+             <li class="list-group-item d-flex justify-content-between list-group-item-success" data-user={{id}}>
                     <h3 class="mt-3"> {{name}} {{#if isAdmin}} ★ {{/if}} 
                         <button type="button" class="btn btn-danger pull-right" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from DB">Delete</button>
                         <button type="button" class="btn btn-secondary pull-right" data-bs-toggle="tooltip" data-bs-placement="top" title="Revoke Public Access">Disable</button>
@@ -27,7 +27,7 @@
         {{#each users as |user| }}
             <span>
             {{#unless isEnabled}}
-            <li class="list-group-item d-flex justify-content-between list-group-item-danger">
+            <li class="list-group-item d-flex justify-content-between list-group-item-danger" data-user={{id}}>
                     <h3 class="mt-3"> {{name}} {{#if isAdmin}} ★ {{/if}} 
                         <button type="button" class="btn btn-danger pull-right" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from DB">Delete</button>
                         <button type="button" class="btn btn-success pull-right" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Public Access">Enable</button>
