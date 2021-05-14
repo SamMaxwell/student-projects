@@ -59,8 +59,6 @@ const userGet = (req, res) => {
     });
 };
 
-const { User } = require('../models');
-
 const manageUsers = (req, res) => {
   User
     .findAll({
