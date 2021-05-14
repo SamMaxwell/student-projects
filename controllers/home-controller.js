@@ -1,14 +1,11 @@
 module.exports = {
   index: ({ session: { isLoggedIn, isEnabled } = {} }, res) => {
     if (!isLoggedIn) {
-      res.redirect('/login');
+      res.redirect('/auth/login');
     } else if (!isEnabled) {
-      res.redirect('/profile', { isEnabled });
+      res.redirect('/users/my-profile');
     } else {
       res.render('home', { isLoggedIn });
     }
-  },
-  login: (req, res) => {
-    res.render('login');
   },
 };

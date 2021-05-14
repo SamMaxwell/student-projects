@@ -9,6 +9,8 @@ db
     .bulkCreate([{
       name: 'Sam Maxwell',
       password: 'Password 1!',
+      isAdmin: true,
+      isEnabled: true,
     }, {
       name: 'Samuel Maddox',
       password: 'Password 1!',

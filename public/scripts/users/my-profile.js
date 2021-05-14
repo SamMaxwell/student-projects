@@ -19,7 +19,7 @@ const save = async (event) => {
 
   clearErrors(error);
 
-  fetch('/profile', {
+  fetch('/users/my-profile', {
     method: 'POST',
     body: JSON.stringify({
       skills: $('#skills').summernote('code'),
@@ -29,7 +29,7 @@ const save = async (event) => {
   })
     .then((response) => {
       if (response.ok) {
-        document.location.replace('/profile');
+        document.location.replace('/users/my-profile');
       }
 
       return response.json();

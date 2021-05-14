@@ -22,8 +22,8 @@
       </h1>
       <nav>
         {{#if isLoggedIn}}
-          <a href="/profile">profile</a> |
-          <button class="no-button" id="logout">logout</button>
+          <a href="/users/my-profile">profile</a> |
+          <a href="/auth/logout">logout</a>
         {{/if}}
       </nav>
     </header>
@@ -34,10 +34,6 @@
       
     </footer>
   </div>
-
-  {{#if isLoggedIn}}
-    <script src="/scripts/main.js"></script>
-  {{/if}}
 </body>
 
 </html>

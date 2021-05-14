@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint . --fix",
     "seed": "node ./seed.js",
-    "start": "node ./server.js",
+    "start": "node ./server.js | pino-pretty",
     "test": "jest ."
   },
   "repository": {
@@ -45,6 +45,7 @@
     "express-session": "^1.17.1",
     "mysql2": "^2.2.5",
     "pino-http": "^5.5.0",
+    "pino-pretty": "^4.8.0",
     "sequelize": "^6.6.2"
   }
 }

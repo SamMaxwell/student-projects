@@ -6,8 +6,8 @@ const {
 
 const lockoutStatuses = {};
 
-const loginGet = (req, res) => {
-  res.render('login');
+const loginGet = ({ session: { isLoggedIn } = {} }, res) => {
+  res.render('auth/login', { isLoggedIn });
 };
 
 const loginPost = (req, res) => {
@@ -49,16 +49,16 @@ const loginPost = (req, res) => {
     });
 };
 
-const logoutPost = ({ log, session }, res) => {
+const logoutGet = ({ log, session }, res) => {
   if (session.isLoggedIn) {
     session.destroy(({ message } = {}) => {
       if (message) log.error(`session.destroy: ${message}`);
       else res.log.info(`User ${session.name} logged out`);
-      res.status(204).end();
+      res.redirect('/');
     });
   } else {
     log.info('logout attempted when not logged in');
-    res.status(400).end();
+    res.redirect('/');
   }
 };
 
@@ -88,6 +88,6 @@ const signupPost = (req, res) => {
 module.exports = {
   loginGet,
   loginPost,
-  logoutPost,
+  logoutGet,
   signupPost,
 };

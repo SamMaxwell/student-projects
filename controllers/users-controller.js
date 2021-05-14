@@ -1,22 +1,24 @@
 const { User } = require('../models');
 
-const profileGet = (req, res) => {
+const myProfileGet = (req, res) => {
   const {
-    session: { userId, isEnabled },
+    session: { userId, isEnabled, isLoggedIn },
   } = req;
 
   User
     .findByPk(userId)
     .then(({ skills, accomplishments }) => {
-      res.render('profile', { isEnabled, skills, accomplishments });
+      res.render('users/my-profile', {
+        isLoggedIn, isEnabled, skills, accomplishments,
+      });
     })
     .catch(({ message } = {}) => {
       req.log.error(`User.findByPk: ${message}`);
-      res.render('error', { message: 'User not found' });
+      res.render('error', { isLoggedIn, message: 'User not found' });
     });
 };
 
-const profilePost = (req, res) => {
+const myProfilePost = (req, res) => {
   const {
     body: { skills, accomplishments },
     session: { userId },
@@ -39,6 +41,6 @@ const profilePost = (req, res) => {
 };
 
 module.exports = {
-  profileGet,
-  profilePost,
+  myProfileGet,
+  myProfilePost,
 };
