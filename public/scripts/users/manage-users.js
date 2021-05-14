@@ -21,7 +21,6 @@ const enableUser = async (event) => {
     headers: { 'Content-Type': 'application/json' },
   }).then((response) => {
     if (response.ok) {
-      // document.location.replace('/users/manage');
       window.location.reload();
     }
   }).catch((err) => {
@@ -44,7 +43,6 @@ const disableUser = async (event) => {
     headers: { 'Content-Type': 'application/json' },
   }).then((response) => {
     if (response.ok) {
-      // document.location.replace('/users/manage');
       window.location.reload();
     }
   }).catch((err) => {
@@ -59,15 +57,14 @@ const deleteUser = async (event) => {
 
   clearErrors(error);
 
-  const userid = event.target;
+  const userid = event.target.dataset.user;
 
   fetch('/manage/delete', {
     method: 'DELETE',
-    body: JSON.stringify(userid),
+    body: JSON.stringify({ userid }),
     headers: { 'Content-Type': 'application/json' },
   }).then((response) => {
     if (response.ok) {
-      // document.location.replace('/users/manage');
       window.location.reload();
     }
   }).catch((err) => {
