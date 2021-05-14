@@ -8,8 +8,7 @@ const getNotIsEnabled = (req, res) => {
     })
     .then((users) => {
       const disabled = users.map((user) => user.get({ plain: true }));
-      console.log(disabled);
-      res.render('users', users);
+      res.render('users', { users: disabled });
     })
     .catch(({ message } = {}) => {
       req.log.error(`User.findAll: ${message}`);
