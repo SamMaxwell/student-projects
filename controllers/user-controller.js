@@ -3,15 +3,17 @@ const { User } = require('../models');
 const getNotIsEnabled = (req, res) => {
   User
     .findAll({
-      order: 'id ASC',
-      where: { isEnabled: false },
+      order: [['name', 'ASC']],
+      where: { isEnabled: 0 },
     })
     .then((users) => {
-      res.render('user', users);
+      const disabled = users.map((user) => user.get({ plain: true }));
+      console.log(disabled);
+      res.render('users', users);
     })
     .catch(({ message } = {}) => {
       req.log.error(`User.findAll: ${message}`);
-      res.render('error', { message: 'User not found' });
+      res.render('error', { message: 'Users not found' });
     });
 };
 
