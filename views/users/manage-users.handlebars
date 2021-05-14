@@ -2,9 +2,13 @@
     USERS 
     <span class="list-group-item-success">Enabled</span> 
     <span class="list-group-item-danger">Disabled</span>
-    <span>★Admin★</span>
-
-    <ol class="list-group list-group-numbered">
+    <span>★Admin★</span> 
+    
+    <br />
+    <code id="manage-error"></code>
+    
+    <br />
+    <ol class="list-group list-group-numbered pull-left">
         {{#each users as |user| }}
             <span>
             {{#if isEnabled}}
@@ -14,17 +18,26 @@
                         <button type="button" class="btn btn-secondary pull-right" data-bs-toggle="tooltip" data-bs-placement="top" title="Revoke Public Access">Disable</button>
                     </h3>
             </li>
-            {{else}}
+            {{/if}}
+            </span>
+        </li>
+        {{/each}}
+    </ol>
+    <ol class="list-group list-group-numbered pull-right">
+        {{#each users as |user| }}
+            <span>
+            {{#unless isEnabled}}
             <li class="list-group-item d-flex justify-content-between list-group-item-danger">
                     <h3 class="mt-3"> {{name}} {{#if isAdmin}} ★ {{/if}} 
                         <button type="button" class="btn btn-danger pull-right" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove from DB">Delete</button>
                         <button type="button" class="btn btn-success pull-right" data-bs-toggle="tooltip" data-bs-placement="top" title="Add Public Access">Enable</button>
                     </h3>
             </li>
-            {{/if}}
+            {{/unless}}
             </span>
-
         </li>
         {{/each}}
     </ol>
 </div>
+
+<script src="/scripts/users/manage-users.js"></script>
