@@ -40,7 +40,27 @@ const myProfilePost = (req, res) => {
     });
 };
 
+const userGet = (req, res) => {
+  const {
+    params: { id },
+    session: { isLoggedIn },
+  } = req;
+
+  User
+    .findByPk(id)
+    .then(({ name, skills, accomplishments }) => {
+      res.render('users/user', {
+        isLoggedIn, name, skills, accomplishments,
+      });
+    })
+    .catch(({ message } = {}) => {
+      req.log.error(`User.findByPk: ${message}`);
+      res.render('error', { isLoggedIn, message: 'User not found' });
+    });
+};
+
 module.exports = {
   myProfileGet,
   myProfilePost,
+  userGet,
 };
