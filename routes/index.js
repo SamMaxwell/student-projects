@@ -6,7 +6,7 @@ const userController = require('../controllers/user-controller');
 module.exports = (logger) => {
   router.get('/', homeController.index);
   router.get('/login', homeController.login);
-  router.get('/not-is-enabled', userController.userEnabled);
+  router.get('/user', userController.userEnabled);
   router.use(getRoutes(logger, __dirname, __filename));
   return router;
 };
