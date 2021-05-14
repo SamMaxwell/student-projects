@@ -4,11 +4,11 @@ const getNotIsEnabled = (req, res) => {
   User
     .findAll({
       order: [['name', 'ASC']],
-      where: { isEnabled: 0 },
+    //   where: { isEnabled: 0 },
     })
     .then((users) => {
-      const disabled = users.map((user) => user.get({ plain: true }));
-      res.render('users', { users: disabled });
+      const statuses = users.map((user) => user.get({ plain: true }));
+      res.render('users', { users: statuses });
     })
     .catch(({ message } = {}) => {
       req.log.error(`User.findAll: ${message}`);
