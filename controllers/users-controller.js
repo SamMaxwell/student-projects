@@ -1,5 +1,17 @@
 const { User } = require('../models');
 
+const updateUser = (req, res, id, changes, errorMessage = 'could not update user') => {
+  User
+    .update(changes, { where: { id } })
+    .then(() => {
+      res.status(200).end();
+    })
+    .catch(({ message } = {}) => {
+      req.log.error(`User.update: ${message}`);
+      res.status(500).json({ message: errorMessage });
+    });
+};
+
 const myProfileGet = (req, res) => {
   const {
     session: { userId, isEnabled, isLoggedIn },
@@ -24,20 +36,7 @@ const myProfilePost = (req, res) => {
     session: { userId },
   } = req;
 
-  User
-    .update({
-      skills,
-      accomplishments,
-    }, {
-      where: { id: userId },
-    })
-    .then(() => {
-      res.status(200).end();
-    })
-    .catch(({ message } = {}) => {
-      req.log.error(`User.update: ${message}`);
-      res.status(500).json({ message: 'could not save profile' });
-    });
+  updateUser(req, res, userId, { skills, accomplishments }, 'could not save profile');
 };
 
 const userGet = (req, res) => {
@@ -59,7 +58,7 @@ const userGet = (req, res) => {
     });
 };
 
-const getManage = (req, res) => {
+const manageGet = (req, res) => {
   const {
     session: { isLoggedIn },
   } = req;
@@ -80,23 +79,15 @@ const getManage = (req, res) => {
     });
 };
 
-const putUser = (req, res) => {
-  if (req.body.password) res.status(405).json({ message: 'Cannot change password of a user.' });
+const userPut = (req, res) => {
+  const { params: { id }, body: { password } } = req;
 
-  User
-    .update(req.body, {
-      where: { id: req.params.id },
-    })
-    .then(() => {
-      res.status(200).end();
-    })
-    .catch(({ message } = {}) => {
-      req.log.error(`User.update: ${message}`);
-      res.status(500).json({ message: 'could not update isEnabled for putUser' });
-    });
+  if (password) res.status(405).json({ message: 'Cannot change password of a user.' });
+
+  updateUser(req, res, id, req.body, 'could not update user');
 };
 
-const deleteUser = (req, res) => {
+const userDelete = (req, res) => {
   User
     .destroy({
       where: { id: req.params.id },
@@ -114,7 +105,7 @@ module.exports = {
   myProfileGet,
   myProfilePost,
   userGet,
-  getManage,
-  putUser,
-  deleteUser,
+  manageGet,
+  userPut,
+  userDelete,
 };
