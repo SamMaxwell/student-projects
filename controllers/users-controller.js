@@ -64,18 +64,14 @@ const getManage = (req, res) => {
     session: { isLoggedIn },
   } = req;
 
-  console.log(`\n\n\n\n\nGET MANAGE\n\n\n\n\n`);
   User
     .findAll({
       order: [['name', 'ASC']],
     })
     .then((data) => {
-      console.log(data);
       const users = data.map((user) => user.get({ plain: true }));
       const enabledUsers = users.filter((user) => user.isEnabled);
       const disabledUsers = users.filter((user) => !user.isEnabled);
-      console.log(enabledUsers);
-      console.log(disabledUsers);
       res.render('users/manage-users', { isLoggedIn, enabledUsers, disabledUsers });
     })
     .catch(({ message } = {}) => {
