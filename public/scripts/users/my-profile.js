@@ -4,12 +4,6 @@ $(document).ready(() => {
   $('#accomplishments').summernote();
 });
 
-const clearErrors = (error) => Object.keys(error)
-  .forEach((key) => {
-    // eslint-disable-next-line no-param-reassign
-    error[key].textContent = '';
-  });
-
 const save = async (event) => {
   event.preventDefault();
 

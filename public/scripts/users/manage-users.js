@@ -1,11 +1,4 @@
 /* eslint-disable no-undef */
-
-const clearErrors = (error) => Object.keys(error)
-  .forEach((key) => {
-    // eslint-disable-next-line no-param-reassign
-    error[key].textContent = '';
-  });
-
 const enableUser = async (event) => {
   const error = {
     form: document.querySelector('#manage-error'),
@@ -15,9 +8,9 @@ const enableUser = async (event) => {
 
   const userid = event.target.dataset.user;
 
-  fetch('/manage/enable', {
+  fetch(`/users/${userid}`, {
     method: 'PUT',
-    body: JSON.stringify({ userid }),
+    body: JSON.stringify({ isEnabled: 1 }),
     headers: { 'Content-Type': 'application/json' },
   }).then((response) => {
     if (response.ok) {
@@ -37,9 +30,9 @@ const disableUser = async (event) => {
 
   const userid = event.target.dataset.user;
 
-  fetch('/manage/disable', {
+  fetch(`/users/${userid}`, {
     method: 'PUT',
-    body: JSON.stringify({ userid }),
+    body: JSON.stringify({ isEnabled: 0 }),
     headers: { 'Content-Type': 'application/json' },
   }).then((response) => {
     if (response.ok) {
@@ -59,10 +52,8 @@ const deleteUser = async (event) => {
 
   const userid = event.target.dataset.user;
 
-  fetch('/manage/delete', {
+  fetch(`/users/${userid}`, {
     method: 'DELETE',
-    body: JSON.stringify({ userid }),
-    headers: { 'Content-Type': 'application/json' },
   }).then((response) => {
     if (response.ok) {
       window.location.reload();
@@ -72,27 +63,9 @@ const deleteUser = async (event) => {
   });
 };
 
-const enabledBtns = document.querySelectorAll('.enable-btn');
-const disabledBtns = document.querySelectorAll('.disable-btn');
-const deletedBtns = document.querySelectorAll('.delete-btn');
-
-if (enabledBtns) {
-  enabledBtns.forEach((elem) => {
-    elem.addEventListener('click', enableUser);
-  });
-}
-
-if (disabledBtns) {
-  disabledBtns.forEach((elem) => {
-    elem.addEventListener('click', disableUser);
-  });
-}
-
-if (deletedBtns) {
-  deletedBtns.forEach((elem) => {
-    elem.addEventListener('click', deleteUser);
-  });
-}
+$(document).on('click', '.enable-btn', enableUser);
+$(document).on('click', '.disable-btn', disableUser);
+$(document).on('click', '.delete-btn', deleteUser);
 
 $(document).ready(() => {
   //

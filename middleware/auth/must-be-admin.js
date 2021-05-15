@@ -1,6 +1,6 @@
 const mustBeAdmin = (req, res, next) => {
   if (!req.session.isAdmin) {
-    res.redirect('/users/my-profile');
+    res.redirect('/');
   } else {
     next();
   }

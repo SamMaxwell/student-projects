@@ -59,8 +59,66 @@ const userGet = (req, res) => {
     });
 };
 
+const getManage = (req, res) => {
+  const {
+    session: { isLoggedIn },
+  } = req;
+
+  console.log(`\n\n\n\n\nGET MANAGE\n\n\n\n\n`);
+  User
+    .findAll({
+      order: [['name', 'ASC']],
+    })
+    .then((data) => {
+      console.log(data);
+      const users = data.map((user) => user.get({ plain: true }));
+      const enabledUsers = users.filter((user) => user.isEnabled);
+      const disabledUsers = users.filter((user) => !user.isEnabled);
+      console.log(enabledUsers);
+      console.log(disabledUsers);
+      res.render('users/manage-users', { isLoggedIn, enabledUsers, disabledUsers });
+    })
+    .catch(({ message } = {}) => {
+      req.log.error(`User.findAll: ${message}`);
+      res.render('error', { isLoggedIn, message: 'Users not found' });
+    });
+};
+
+const putUser = (req, res) => {
+  if (req.body.password) res.status(405).json({ message: 'Cannot change password of a user.' });
+
+  User
+    .update(req.body, {
+      where: { id: req.params.id },
+    })
+    .then(() => {
+      res.status(200).end();
+    })
+    .catch(({ message } = {}) => {
+      req.log.error(`User.update: ${message}`);
+      res.status(500).json({ message: 'could not update isEnabled for putUser' });
+    });
+};
+
+const deleteUser = (req, res) => {
+  User
+    .destroy({
+      where: { id: req.params.id },
+    })
+    .then(() => {
+      res.status(200).end();
+    })
+    .catch(({ message } = {}) => {
+      req.log.error(`User.delete: ${message}`);
+      res.status(500).json({ message: 'could not delete user' });
+    });
+};
+
 module.exports = {
   myProfileGet,
   myProfilePost,
   userGet,
+  getManage,
+  putUser,
+  deleteUser,
 };
